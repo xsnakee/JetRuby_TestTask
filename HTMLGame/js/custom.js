@@ -111,12 +111,16 @@ function checkTargets(mass) {
             currentScore++;
             return;
         } else {
-            firstTile.classList.toggle('rotate');
-            firstTile.setAttribute('confirmation', false);
-            firstTile.childNodes[0].classList.toggle('hidden');
-            secondTile.classList.toggle('rotate');
-            secondTile.setAttribute('confirmation', false);
-            secondTile.childNodes[0].classList.toggle('hidden');
+
+
+            setTimeout(function () {
+                firstTile.classList.toggle('rotate');
+                firstTile.setAttribute('confirmation', false);
+                firstTile.childNodes[0].classList.toggle('hidden');
+                secondTile.classList.toggle('rotate');
+                secondTile.setAttribute('confirmation', false);
+                secondTile.childNodes[0].classList.toggle('hidden');
+            }, 1000)
         }
     };
     return;
@@ -142,13 +146,16 @@ function startGame() {
     board.addEventListener("click", function (event) {
         var tileIsTarget = event.target.parentNode;
         var frontIsTarget = event.target;
-        if (tileIsTarget.getAttribute('confirmation') == "true") return;
-        tileIsTarget.classList.toggle('rotate');
-        frontIsTarget.classList.toggle('hidden');
-        getElementId(tileId, tileIsTarget);
-        checkTargets(tileId);
-        if (currentScore == scoreToWin) {
-            congratulations();
+        if (frontIsTarget.classList.contains('front_block')) {
+            if (tileIsTarget.getAttribute('confirmation') == "true") return;
+            frontIsTarget.classList.toggle('hidden');
+            tileIsTarget.classList.toggle('rotate');
+            getElementId(tileId, tileIsTarget);
+            checkTargets(tileId);
+            if (currentScore == scoreToWin) {
+                congratulations();
+            }
+
         }
     });
 
