@@ -19,6 +19,33 @@ var tilesBackgrounds = [
 ];
 
 /*
+ * FUNCTION IS CUT ARRAY OF COLORS
+ */
+function countOfTiles(mass) {
+
+    if (scoreToWin < mass.length) {
+        mass.splice(scoreToWin, mass.length - scoreToWin);
+    }
+    return mass;
+}
+
+/*
+ * FUNCTION RANDOM SORT ALL ELEMENTS OF ARRAY
+ */
+function randomArraySort(mass) {
+    var currentElementNumber, elementNumberToSwap, temp;
+    currentElementNumber = mass.length;
+    while (currentElementNumber) {
+        elementNumberToSwap = Math.floor((currentElementNumber--) * Math.random());
+
+        temp = mass[currentElementNumber];
+        mass[currentElementNumber] = mass[elementNumberToSwap];
+        mass[elementNumberToSwap] = temp;
+    }
+    return mass;
+}
+
+/*
  * FUNCTION BUILD PLAYING PLACE
  */
 function buildDesk() {
@@ -27,6 +54,7 @@ function buildDesk() {
     deskWrapper.appendChild(newDesk);
 
     for (var i = 0; i < 2; i++) {
+        randomArraySort(tilesBackgrounds);
         for (var currentTilesCount = 0; currentTilesCount < scoreToWin; currentTilesCount++) {
             var newTile = document.createElement('div');
             newTile.className = "board_tile";
@@ -49,18 +77,26 @@ function resetGame() {
 }
 
 /*
+ * FUCNTION GET TARTGET ADDRESS
+ */
+function getElementId() {
+    if ((!tileId[0]) || (tileId[0] && tileId[1])) {
+        tileId[0] = event.target.id;
+    } else if (tileId[0] && !tileId[1]) {
+        tileId[1] = event.target.id;
+    }
+}
+
+/*
  *   FUNCTION START GAME
  */
-
 function startGame() {
+    countOfTiles(tilesBackgrounds);
     buildDesk();
     board.addEventListener("click", function (event) {
-        address = event.target.id;
         //if (taget.hasAttribute('confirmation')) return false;
         event.target.classList.toggle('dark_tile');
     });
-
-
     resetButton.addEventListener("click", resetGame);
 }
 
