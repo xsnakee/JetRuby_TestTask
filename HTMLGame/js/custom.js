@@ -4,8 +4,6 @@ var boardSize = col * row;
 var scoreToWin = boardSize / 2;
 var currentScore;
 var deskWrapper = document.getElementById('wrapper');
-//var mainDesk = document.getElementById('board');
-
 var startButton = document.querySelector('#startButton');
 var resetButton = document.querySelector('#resetButton');
 var tilesBackgrounds = [
@@ -19,6 +17,7 @@ var tilesBackgrounds = [
     "cadetblue",
     "chartreuse"
 ];
+
 /*
  * FUNCTION BUILD PLAYING PLACE
  */
@@ -40,4 +39,29 @@ function buildDesk() {
     startButton.disabled = true;
 
 }
-startButton.addEventListener("click", buildDesk);
+
+/*
+ * FUCNTION RESET PLAING PLACE
+ */
+function resetGame() {
+    deskWrapper.innerHTML = "";
+    startButton.disabled = false;
+}
+
+/*
+ *   FUNCTION START GAME
+ */
+
+function startGame() {
+    buildDesk();
+    board.addEventListener("click", function (event) {
+        address = event.target.id;
+        //if (taget.hasAttribute('confirmation')) return false;
+        event.target.classList.toggle('dark_tile');
+    });
+
+
+    resetButton.addEventListener("click", resetGame);
+}
+
+startButton.addEventListener("click", startGame);
