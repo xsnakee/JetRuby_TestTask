@@ -132,7 +132,8 @@ function checkTargets(mass) {
 function congratulations() {
     resetGame();
     var winBlock = document.createElement('div');
-    winBlock.innerHTML = "CONGRATULATIONS";
+    winBlock.className = "congratulations_message"
+    winBlock.innerHTML = "CONGRATULATIONS! <br> YOU WIN!";
     deskWrapper.appendChild(winBlock);
 }
 /*
