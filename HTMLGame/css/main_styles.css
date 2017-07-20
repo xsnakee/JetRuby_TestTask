@@ -13,6 +13,7 @@ body {
     height: 600px;
     box-sizing: border-box;
     border: 1px solid #000;
+    background: #DC143C;
 }
 
 #board {
@@ -78,4 +79,18 @@ body {
 .hidden {
     opacity: 0;
     visibility: hidden;
+}
+
+.congratulations_message {
+    margin-top: 50%;
+    font-size: 40px;
+    font-weight: 600;
+    color: #FFA000;
+    transform: rotate(-30deg);
+    -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+    text-transform: uppercase;
 }
