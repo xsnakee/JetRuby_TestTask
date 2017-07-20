@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    text-align: center;
+}
+
+#wrapper {
+    margin: 40px auto;
+    width: 600px;
+    height: 600px;
+    box-sizing: border-box;
+    border: 1px solid #000;
+}
+
+#board {
+    display: block;
+    margin: auto;
+    width: 600px;
+    height: 600px;
+    box-sizing: border-box;
+    background-color: #000;
+}
+
+.board_tile {
+    display: inline-block;
+    width: calc(100%/4);
+    height: calc(100%/4);
+    border: 2px solid #000;
+    transition: 1s;
+    box-sizing: border-box;
+    margin: -2px auto;
+}
+
+.dark_tile {
+    border-color: #e22121;
+    opacity: 0.5;
+}
+
+.interfaceButton {
+    margin-top: 30px;
+    width: 100px;
+    height: 30px;
+    border-radius: 2px;
+    background-color: #a7d48b;
+}
