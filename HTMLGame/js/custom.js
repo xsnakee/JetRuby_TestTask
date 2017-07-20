@@ -75,8 +75,9 @@ function buildDesk() {
  * FUNCTION RESET PLAING PLACE
  */
 function resetGame() {
-    deskWrapper.innerHTML = "";
     startButton.disabled = false;
+    deskWrapper.innerHTML = "";
+    currentScore = 0;
 }
 /*
  * FUNCTION GET TARTGET ID
@@ -102,7 +103,6 @@ function checkTargets(mass) {
         var firstTile = document.getElementById(mass[0]);
         var secondTile = document.getElementById(mass[1]);
         if (firstTile.style.background == secondTile.style.background) {
-            alert("yahooo!!!");
             firstTile.setAttribute('confirmation', true);
             secondTile.setAttribute('confirmation', true);
             currentScore++;
@@ -116,24 +116,38 @@ function checkTargets(mass) {
     };
     return;
 }
+
+/*
+ *   FUNCTION IS MAKE CONGRATULATIONS
+ */
+function congratulations() {
+    resetGame();
+    var winBlock = document.createElement('div');
+    winBlock.innerHTML = "CONGRATULATIONS";
+    deskWrapper.appendChild(winBlock);
+}
 /*
  *   FUNCTION START GAME
  */
 function startGame() {
+    resetGame();
     var tileId = [];
     countOfTiles(tilesBackgrounds);
     buildDesk();
     board.addEventListener("click", function (event) {
-        if (event.target.getAttribute('confirmation') == "true") return;        
+        if (event.target.getAttribute('confirmation') == "true") return;
         event.target.classList.toggle('dark_tile');
-        event.target.setAttribute('confirmation', true);        
+        event.target.setAttribute('confirmation', true);
         getElementId(tileId, event.target);
         checkTargets(tileId);
+        if (currentScore == scoreToWin) {
+            congratulations();
+        }
     });
-    resetButton.addEventListener("click", function(){
-        tileId = [];
-        resetGame();
-    });
+
 }
 
 startButton.addEventListener("click", startGame);
+resetButton.addEventListener("click", function () {
+    resetGame();
+});
