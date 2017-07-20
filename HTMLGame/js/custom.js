@@ -113,8 +113,10 @@ function checkTargets(mass) {
         } else {
             firstTile.classList.toggle('rotate');
             firstTile.setAttribute('confirmation', false);
+            firstTile.childNodes[0].classList.toggle('hidden');
             secondTile.classList.toggle('rotate');
             secondTile.setAttribute('confirmation', false);
+            secondTile.childNodes[0].classList.toggle('hidden');
         }
     };
     return;
@@ -142,6 +144,7 @@ function startGame() {
         var frontIsTarget = event.target;
         if (tileIsTarget.getAttribute('confirmation') == "true") return;
         tileIsTarget.classList.toggle('rotate');
+        frontIsTarget.classList.toggle('hidden');
         getElementId(tileId, tileIsTarget);
         checkTargets(tileId);
         if (currentScore == scoreToWin) {
