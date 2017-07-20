@@ -2,7 +2,7 @@ var col = 4,
     row = 4;
 var boardSize = col * row;
 var scoreToWin = boardSize / 2;
-var currentScore;
+var currentScore = 0;
 var deskWrapper = document.getElementById('wrapper');
 var startButton = document.querySelector('#startButton');
 var resetButton = document.querySelector('#resetButton');
@@ -55,12 +55,13 @@ function buildDesk() {
     newDesk.id = "board";
     deskWrapper.appendChild(newDesk);
 
-    for (var i = 1; i < 3; i++) {
+    for (var i = 0; i < 2; i++) {
         randomArraySort(tilesBackgrounds);
         for (var currentTilesCount = 0; currentTilesCount < scoreToWin; currentTilesCount++) {
             var newTile = document.createElement('div');
+            var tileNameNumber = currentTilesCount + 1 + (8 * i);
             newTile.className = "board_tile";
-            newTile.id = "tile" + (currentTilesCount + 1) * i;
+            newTile.id = "tile" + tileNameNumber;
             newTile.setAttribute('confirmation', false);
             newTile.style.background = tilesBackgrounds[currentTilesCount];
             newDesk.appendChild(newTile);
@@ -80,14 +81,14 @@ function resetGame() {
 /*
  * FUNCTION GET TARTGET ID
  */
-function getElementId(mass, event) {
+function getElementId(mass, target) {
     if ((!mass[0])) {
-        mass[0] = event.target.id;
+        mass[0] = target.id;
     } else if (mass[0] && !mass[1]) {
-        mass[1] = event.target.id;
+        mass[1] = target.id;
     } else if (mass[0] && mass[1]) {
-        mass[0] = event.target.id;
-        mass[1] = undefined;
+        mass[0] = target.id;
+        mass.pop();
     }
     return mass;
 }
@@ -104,35 +105,35 @@ function checkTargets(mass) {
             alert("yahooo!!!");
             firstTile.setAttribute('confirmation', true);
             secondTile.setAttribute('confirmation', true);
-            return true;
+            currentScore++;
+            return;
         } else {
             firstTile.classList.toggle('dark_tile');
             firstTile.setAttribute('confirmation', false);
             secondTile.classList.toggle('dark_tile');
-
+            secondTile.setAttribute('confirmation', false);
         }
     };
-    return false;
+    return;
 }
 /*
  *   FUNCTION START GAME
  */
 function startGame() {
     var tileId = [];
-
     countOfTiles(tilesBackgrounds);
     buildDesk();
     board.addEventListener("click", function (event) {
-        if (event.target.getAttribute('confirmation') == "true") return;
-        getElementId(tileId, event);
-        var result = checkTargets(tileId);
-        //*/
-        alert(tileId[0]);
-        alert(tileId[1]);
-        //*/
+        if (event.target.getAttribute('confirmation') == "true") return;        
         event.target.classList.toggle('dark_tile');
+        event.target.setAttribute('confirmation', true);        
+        getElementId(tileId, event.target);
+        checkTargets(tileId);
     });
-    resetButton.addEventListener("click", resetGame);
+    resetButton.addEventListener("click", function(){
+        tileId = [];
+        resetGame();
+    });
 }
 
 startButton.addEventListener("click", startGame);
