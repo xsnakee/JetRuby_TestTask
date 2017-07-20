@@ -65,6 +65,9 @@ function buildDesk() {
             newTile.setAttribute('confirmation', false);
             newTile.style.background = tilesBackgrounds[currentTilesCount];
             newDesk.appendChild(newTile);
+            var newFrontBlock = document.createElement('div');
+            newFrontBlock.className = "front_block";
+            newTile.appendChild(newFrontBlock);
         }
     }
     startButton.disabled = true;
@@ -99,7 +102,7 @@ function getElementId(mass, target) {
  * FUNCTION CHECK TARGETS
  */
 function checkTargets(mass) {
-    if (mass[0] && mass[1]) {
+    if (mass[0] && mass[1] && (mass[0] != mass[1])) {
         var firstTile = document.getElementById(mass[0]);
         var secondTile = document.getElementById(mass[1]);
         if (firstTile.style.background == secondTile.style.background) {
@@ -108,9 +111,9 @@ function checkTargets(mass) {
             currentScore++;
             return;
         } else {
-            firstTile.classList.toggle('dark_tile');
+            firstTile.classList.toggle('rotate');
             firstTile.setAttribute('confirmation', false);
-            secondTile.classList.toggle('dark_tile');
+            secondTile.classList.toggle('rotate');
             secondTile.setAttribute('confirmation', false);
         }
     };
@@ -135,10 +138,11 @@ function startGame() {
     countOfTiles(tilesBackgrounds);
     buildDesk();
     board.addEventListener("click", function (event) {
-        if (event.target.getAttribute('confirmation') == "true") return;
-        event.target.classList.toggle('dark_tile');
-        event.target.setAttribute('confirmation', true);
-        getElementId(tileId, event.target);
+        var tileIsTarget = event.target.parentNode;
+        var frontIsTarget = event.target;
+        if (tileIsTarget.getAttribute('confirmation') == "true") return;
+        tileIsTarget.classList.toggle('rotate');
+        getElementId(tileId, tileIsTarget);
         checkTargets(tileId);
         if (currentScore == scoreToWin) {
             congratulations();
